@@ -1,0 +1,5 @@
+gitlab_server = "https://my.gitlab.com/"
+ec2_instance_type = "t2.medium"
+gitlab_runner_image_version = "alpine-v11.3.1"
+runner_name = "my-gitlab-runner"
+ssh_key_name = "my-aws-ssh-key-pair"
