@@ -1,5 +1,7 @@
 # Automatisiertes Aufsetzen von Gitlab-Runner bei AWS
-Dieses Repository enthält Terraform-Code zum Aufsetzen eines Gitlab-Runners bei AWS, der sich automatisch bei Gitlab anmeldet. Man muss den Code nicht verstehen, sondern nur diese Anleitung befolgen, um den Runner aufzusetzen. Der Runner wird dabei als eine einzelne Instanz vom Typ `t2.medium` (konfigurierbar) erstellt. 
+Dieses Repository enthält Terraform-Code zum Aufsetzen eines Gitlab-Runners bei AWS, der sich automatisch bei Gitlab anmeldet. Man muss den Code nicht verstehen, sondern nur diese Anleitung befolgen, um den Runner aufzusetzen.
+
+Der Code fährt eine einzelne EC2-Instanz vom Typ `t2.medium` (konfigurierbar) hoch. Auf dieser wird ein Gitlab Runner vom Typ `docker-executor` gestartet, der durch Docker-in-Docker auch das Bauen von Docker-Images innerhalb einer Gitlab-CI-Pipeline ermöglicht.
 
 Folgende Vorbedinungen müssen für die Nutzung erfüllt sein:
 - Man benötigt einen AWS Account. Für diesen muss man einen Access Key erstellt und dessen Credentials unter `~/.aws/credentials` konfiguriert haben.
