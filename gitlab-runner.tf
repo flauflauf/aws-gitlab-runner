@@ -70,6 +70,7 @@ resource "aws_instance" "gitlab-runner" {
     }
 
     inline = [
+      "sudo systemctl enable docker",
       "docker run -d -e DOCKER_IMAGE=ruby:2.1 -e RUNNER_NAME=${var.runner_name} -e CI_SERVER_URL=${var.gitlab_server} -e REGISTRATION_TOKEN=${var.token} -e RUNNER_EXECUTOR=docker -e REGISTER_NON_INTERACTIVE=true --name gitlab-runner --restart always -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner:${var.gitlab_runner_image_version}",
       "docker exec -it gitlab-runner gitlab-runner register --docker-privileged",
     ]
