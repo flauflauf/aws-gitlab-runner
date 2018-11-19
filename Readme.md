@@ -9,7 +9,7 @@ Folgende Vorbedinungen müssen für die Nutzung erfüllt sein:
 - Terraform muss auf dem Rechner installiert sein.
 
 ## Variablen spezifizieren
-In `public.tfvars` sind alle nicht-sensiblen Variablen eingestellt. Insbesondere `gitlab_server` und `ssh_key_name` sollten angepasst werden.
+In `inputs.tf` findet man alle Variablen, die definiert werden müssen. In `public.auto.tfvars` sind bereits alle nicht-geheimen Variablen eingestellt. Übrig bleiben `token` und `ssh_private_key_path`, die man in einer `secret.auto.tfvars` zuweisen sollte. Das Token haben wir oben herausgefunden. der `ssh_private_key_path` sollte auf einen privaten SSH-Schlüssel zeigen.
 
 ## Token erstellen
 Folgende Schritte auf Gitlab ausführen:
@@ -26,20 +26,16 @@ Dann kann man den Gitlab-Runner bei AWS automatisch mit Terraform aus diesem Ord
 
 ````
 terraform init
-terraform apply -var-file="public.tfvars"
+terraform apply
 ````
-
-Terraform fragt dann noch nach den Variablen `token` und `ssh_private_key_path`. Ersteren haben wir oben herausgefunden. Letzterer sollte auf unseren privaten SSH-Schlüssel zeigen. Ihr findet ihn in unserer Keepass-Datei.
 
 Dann plant Terraform, was zu tun ist, und fragt nochmal, ob es das tun soll. Wenn ihr das bestätigt, setzt Terraform automatisch alles auf. Ihr könnt den Runner anschließend direkt auf der Projektseite sehen und nutzen.
 
 ## Runner abräumen
 Um den Runner und seine gesamte Infrastruktur abzuräumen, reicht folgender Befehl:
 
-    terraform destroy -var-file="public.tfvars"
-
-Weitere Variablen müssen wieder angegeben werden. Ihr könnt aber auch falsche Werte angeben, da diese beim Abräumen eh irrelevant sind. Nur bei `ssh_private_key_path` muss ein gültiger Dateipfad angegeben werden. Das kann aber der einer beliebigen Datei sein.
+    terraform destroy
 
 ## Terraform State Dateien
 
-Terraform speichert den Ist-Zustand der von ihm verwalteten Ressourcen in `terraform.tfstate`. Diese Datei kann im Git gespeichert werden, solange sie keine Geheimnisse enthält.
+Terraform speichert den Ist-Zustand der von ihm verwalteten Ressourcen in `terraform.tfstate`. Diese Datei kann und sollte im Git gespeichert werden, solange sie keine Geheimnisse enthält.
